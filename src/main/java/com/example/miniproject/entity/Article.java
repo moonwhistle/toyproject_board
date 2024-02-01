@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -12,6 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @NoArgsConstructor //기본 생성자 어노테이션
+@Getter
 public class Article {
     @Id //대푯값
     @GeneratedValue
@@ -21,7 +23,5 @@ public class Article {
     private  String title; //DB의 title 열과 연결
     @Column
     private String content;
-
-
 
 }
