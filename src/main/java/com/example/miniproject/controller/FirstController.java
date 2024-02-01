@@ -15,4 +15,11 @@ public class FirstController {
 
         return "greeting";
     }
+    @GetMapping("/bye")
+    public String seeYouNext(Model model)
+    {
+        model.addAttribute("username","상휘");
+        return "bye";
+    }
+
 }
