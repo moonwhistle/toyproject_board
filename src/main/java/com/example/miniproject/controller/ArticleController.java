@@ -37,7 +37,7 @@ public class ArticleController {
         Article saved = articleRepository.save(article);
         log.info(saved.toString());
 
-        return "redirect:/articles/"+ saved.getId();
+        return "redirect:/articles/"+ saved.getId(); //상세페이지 URL
     }
 
     @GetMapping("/articles/{id}")
@@ -47,7 +47,7 @@ public class ArticleController {
 
         //1. id 조회해 데이터 가져오기
         Article articleEntity = articleRepository.findById(id).orElse(null);
-        //2. 모델에 데잍처 등록하기
+        //2. 모델에 데이터 등록하기
         model.addAttribute("article", articleEntity);
         //3 뷰 페이지 반환
         return "articles/show";
@@ -60,6 +60,41 @@ public class ArticleController {
         //2.모델에 데이터 등록
         model.addAttribute("articleList", articleEntityList);
         //3. 뷰 페이지 설정
-        return "articles/index";
+        return "articles/index"; //목록 View
     }
+
+    @GetMapping("/articles/{id}/edit")
+    public String edit(@PathVariable Long id, Model model) //id를 매개변수로 가져오기
+    {
+        //수정할 데이터 가져오기
+        Article articleEntity = articleRepository.findById(id).orElse(null);
+
+        model.addAttribute("article", articleEntity);
+
+        return "articles/edit";
+    }
+
+    @PostMapping("articles/update")
+    public String update(ArticleForm form)
+    {
+        log.info(form.toString());
+
+        //1. dto -> entity
+        Article articleEntity = form.toEntity();
+        log.info(articleEntity.toString());
+        //2. entity DB저장
+        //기존 값 가져오기
+        Article target = articleRepository.findById(articleEntity.getId()).orElse(null);
+        //기존 값 갱신
+        if(target != null)
+        {
+            articleRepository.save(articleEntity);
+        }
+
+        //3. 수정 결과 페이지로 리다이렉트
+        return "redirect:/articlesa/"+articleEntity.getId();
+    }
+
+
+  
 }
