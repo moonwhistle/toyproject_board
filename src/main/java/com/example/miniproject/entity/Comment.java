@@ -1,5 +1,6 @@
 package com.example.miniproject.entity;
 
+import com.example.miniproject.dto.CommentDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,4 +26,23 @@ public class Comment {
 
     @Column
     private String body; //댓글 본문
+
+    public static Comment createComment(CommentDto dto, Article article) {
+        //예외 발생
+        if(dto.getId() != null) //댓글 생성 이전에 id가 있을 수 없음
+        {
+            throw new IllegalArgumentException("댓글 생성 실패! 댓글의 id가 없어야 합니다.");
+        }
+        if(dto.getArticleId() != article.getId())
+        {
+            throw new IllegalArgumentException("댓글 생성 실패! 게시글의 id가 잘못됐습니다.");
+        }
+        //엔티티 생성 및 반환
+        return new Comment(
+                dto.getId(),//댓글 아이디
+                article, //부모 게시글
+                dto.getNickname(), //댓글 닉네임
+                dto.getBody() //댓글 본문
+        );
+    }
 }
