@@ -1,8 +1,10 @@
 package com.example.miniproject.controller;
 
 import com.example.miniproject.dto.ArticleForm;
+import com.example.miniproject.dto.CommentDto;
 import com.example.miniproject.entity.Article;
 import com.example.miniproject.repository.ArticleRepository;
+import com.example.miniproject.service.CommentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Controller
@@ -21,6 +24,8 @@ public class ArticleController {
 
     @Autowired //레파지토리 객체 주입
     private ArticleRepository articleRepository;
+    @Autowired
+    private CommentService commentService;
     @GetMapping("/articles/new")
     public String newArticleForm()
     {
@@ -48,8 +53,10 @@ public class ArticleController {
 
         //1. id 조회해 데이터 가져오기
         Article articleEntity = articleRepository.findById(id).orElse(null);
+        List<CommentDto> commentDtos = commentService.comments(id);
         //2. 모델에 데이터 등록하기
         model.addAttribute("article", articleEntity);
+        model.addAttribute("commentDtos",commentDtos); //댓글 목록 모델에 등록
         //3 뷰 페이지 반환
         return "articles/show";
     }
