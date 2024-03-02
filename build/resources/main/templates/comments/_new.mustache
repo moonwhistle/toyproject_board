@@ -48,6 +48,12 @@
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(comment) //comment 객체를 JSON 문자열로 반환해 전송
+            }).then(response =>{
+                //HTTP 응답 코드에 따른 메세지 출력
+                const msg = (response.ok) ? "댓글이 등록됐습니다." : "댓글 등록 실패..!";
+                alert(msg);
+                //현재 페이지 새로 고침
+                window.location.reload();
             })
         });
     }
