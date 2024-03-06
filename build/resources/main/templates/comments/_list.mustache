@@ -8,7 +8,7 @@
                         수정
                     </button>
                     <!-- 댓글 삭제 버튼 -->
-                    <button type="button" class="btn btn-sm btn-outline-danger comment-delete-btn">삭제</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger comment-delete-btn" data-comment-id="{{id}}">삭제</button>
                 </div>
                 <div class ="card-body">
                     {{body}} <!-- 댓글 본문 보여주기 -->
@@ -113,8 +113,12 @@
         //    console.log("삭제 버튼이 클리됐습니다..!");
         //})
         commentDeleteBtn.forEach(btn=>{ //forEach 문으로 여러개 선택
-            btn.addEventListener("click",()=>{
-                console.log("삭제 버튼이 클리됐습니다..!")
+            btn.addEventListener("click",(event)=>{
+                //이벤트 발생 요소 선택
+                const commentDeleteBtn = event.target; //삭제 버튼 변수화
+                //삭제 댓글 id 가져오기
+                const commentId = commentDeleteBtn.getAttribute("data-comment-id"); //id 가져오기
+                console.log(`삭제 버튼 클릭: ${commentId}번 댓글`); 
             })
         })
     }
