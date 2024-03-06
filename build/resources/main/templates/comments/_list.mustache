@@ -102,3 +102,20 @@
         })
     }
 </script>
+
+<!-- 댓글 삭제 -->
+<script>
+    {
+        //삭제 버튼 선택
+        const commentDeleteBtn = document.querySelectorAll(".comment-delete-btn") //querySelectorAll = 버튼 여러개 선택
+        //삭제 버튼 이벤트 처리
+        //commentDeleteBtn.addEventListener("click",function (){
+        //    console.log("삭제 버튼이 클리됐습니다..!");
+        //})
+        commentDeleteBtn.forEach(btn=>{ //forEach 문으로 여러개 선택
+            btn.addEventListener("click",()=>{
+                console.log("삭제 버튼이 클리됐습니다..!")
+            })
+        })
+    }
+</script>
